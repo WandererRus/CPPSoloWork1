@@ -7,6 +7,8 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
+
 using namespace std;
 class Student
 {
@@ -52,15 +54,95 @@ public:
         fio = new char[sizeof(newfio)];
         fio = newfio;
     }
+
+    ~Student()
+    {
+        delete[] fio;
+        delete[] dateofbirth;
+        delete[] phone;
+        delete[] city;
+        delete[] country;
+        delete[] universitycity;
+        delete[] university;
+        delete[] universitycountry;
+        delete[] numbergroup;
+    }
+};
+
+class Point {
+private:
+    double x;
+    double y;
+    double z;
+public:
+    Point() : x{ 0.0 }, y{ 0.0 }, z{ 0.0 } {}
+    Point(double xpoint, double ypoint, double zpoint) : x{ xpoint }, y{ ypoint }, z{ zpoint } {};
+
+    void print()
+    {
+        cout << to_string(x) << " ; " << to_string(y) << " ; " << to_string(z) << endl;
+    }
+
+    double GetX() 
+    {
+        return x;
+    }
+    void SetX(double newx)
+    {
+        x = newx;
+    }
+
+    void savePoint(string path = "D:\\testpoint.txt")
+    {
+        ofstream out;          // поток для записи
+        out.open(path); // окрываем файл для записи
+        if (out.is_open())
+        {
+            out << to_string(x) << " ; " << to_string(y) << " ; " << to_string(z) << endl;
+        }
+        out.close();
+    }
+
+    void loadPoint(string path = "D:\\testpoint.txt")
+    {
+        string line;
+
+        ifstream in(path); // окрываем файл для чтения
+        if (in.is_open())
+        {
+            while (getline(in, line))
+            {
+                cout << line << endl;
+            }
+        }
+        in.close();     // закрываем файл
+    }
+    ~Point()
+    {
+
+    }
 };
 int main()
 {
-    Student stud{ "Antonov Anton Antonovich","25.08.2001"," + 79992524585",
+    /*
+    Student stud{"Antonov Anton Antonovich","25.08.2001"," + 79992524585",
         "Rostov","Russia","DGTU","ROSTOV","Russia","Cool123" };
     stud.print();
     cout << stud.GetFIO() << "\n";
     stud.SetFIO("Ivanov Ivan Ivanovich");
-    stud.print();
+    stud.print();*/
+
+
+    /*Point pt;
+    Point pt2(1.0, 2.0, 3.0);
+    pt.print();
+    pt.SetX(3.0);
+    pt.print();
+    pt.savePoint();
+    pt.loadPoint();
+    pt2.print();
+    */
+    return 0;
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
