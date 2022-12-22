@@ -70,28 +70,29 @@ public:
 };
 
 class Point {
+
 private:
     double x;
     double y;
-    double z;
-public:
-    Point() : x{ 0.0 }, y{ 0.0 }, z{ 0.0 } {}
-    Point(double xpoint, double ypoint, double zpoint) : x{ xpoint }, y{ ypoint }, z{ zpoint } {};
+    double z;  
+    static int& Count() { static int c = 0; return c; }
+public:    
+    Point() : x{ 0.0 }, y{ 0.0 }, z{ 0.0 } { 
+        ++Count();
+    }
+    Point(double xpoint, double ypoint, double zpoint) : x{ xpoint }, y{ ypoint }, z{ zpoint } {
+        ++Count();
+    };
 
     void print()
     {
         cout << to_string(x) << " ; " << to_string(y) << " ; " << to_string(z) << endl;
     }
 
-    double GetX() 
+    static int GetCountCreatePoints()
     {
-        return x;
+        return Count();
     }
-    void SetX(double newx)
-    {
-        x = newx;
-    }
-
     void savePoint(string path = "D:\\testpoint.txt")
     {
         ofstream out;          // поток для записи
@@ -119,7 +120,7 @@ public:
     }
     ~Point()
     {
-
+        --Count();
     }
 };
 int main()
@@ -131,17 +132,21 @@ int main()
     cout << stud.GetFIO() << "\n";
     stud.SetFIO("Ivanov Ivan Ivanovich");
     stud.print();*/
-
-
-    /*Point pt;
+    Point::GetCountCreatePoints();
+    Point pt;
+    Point::GetCountCreatePoints();
     Point pt2(1.0, 2.0, 3.0);
+
+    Point::GetCountCreatePoints();
+    
     pt.print();
-    pt.SetX(3.0);
     pt.print();
     pt.savePoint();
     pt.loadPoint();
     pt2.print();
-    */
+
+    Point::GetCountCreatePoints();
+
     return 0;
 }
 
