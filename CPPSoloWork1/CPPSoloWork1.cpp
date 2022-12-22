@@ -10,6 +10,7 @@
 #include <fstream>
 
 using namespace std;
+
 class Student
 {
 private:
@@ -79,9 +80,11 @@ private:
 public:    
     Point() : x{ 0.0 }, y{ 0.0 }, z{ 0.0 } { 
         ++Count();
+        cout << "Объект базовый создан" << endl;
     }
     Point(double xpoint, double ypoint, double zpoint) : x{ xpoint }, y{ ypoint }, z{ zpoint } {
         ++Count();
+        cout << "Объект создан" << endl;
     };
 
     void print()
@@ -89,9 +92,9 @@ public:
         cout << to_string(x) << " ; " << to_string(y) << " ; " << to_string(z) << endl;
     }
 
-    static int GetCountCreatePoints()
+    static void GetCountCreatePoints()
     {
-        return Count();
+        cout << Count() << "\n" << endl;
     }
     void savePoint(string path = "D:\\testpoint.txt")
     {
@@ -121,10 +124,13 @@ public:
     ~Point()
     {
         --Count();
+        cout << "Объект уничтожен" << endl;
     }
 };
 int main()
 {
+
+    setlocale(LC_ALL, "Russian");
     /*
     Student stud{"Antonov Anton Antonovich","25.08.2001"," + 79992524585",
         "Rostov","Russia","DGTU","ROSTOV","Russia","Cool123" };
@@ -136,15 +142,12 @@ int main()
     Point pt;
     Point::GetCountCreatePoints();
     Point pt2(1.0, 2.0, 3.0);
-
-    Point::GetCountCreatePoints();
     
     pt.print();
     pt.print();
     pt.savePoint();
     pt.loadPoint();
     pt2.print();
-
     Point::GetCountCreatePoints();
 
     return 0;
